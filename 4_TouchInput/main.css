@@ -1,0 +1,19 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  
+  .box {
+    border: 3px solid deepskyblue;
+    background-color: peachpuff;
+    color: deepskyblue;
+    border-radius: .5em;
+    padding: 20px;
+    cursor: move;
+    margin: 10px;
+  }
+
+  .box.over {
+    border: 3px dotted #666;
+  }
