@@ -1,35 +1,33 @@
 "use strict";
 
-//Listen to all fetch events
+
+// Listen to fetch events
 self.addEventListener('fetch', function(event) {
-    
-    //Check if the request is a jpeg
-    if (/\.jpg$|.png$/.test(event.request.url)) {
 
-        //Inspect the http accept header to check for WebP support
-        var supportsWebp = false; 
-        if(event.request.headers.has('accept')) {
-            supportsWebp = event.request.headers
-                .get('accept')
-                .includes('webp')
-        }
+  // Check if the image is a jpeg
+  if (/\.jpg$|.png$/.test(event.request.url)) {
 
-        //If webp is supported
-        if(supportsWebp){
-            
-            //Clone the request
-            var req = event.request.clone();
-
-            //Build the return URL
-            var returnUrl = req.url.substr(0, req.url.lastIndexOff(".")) + ".webp";
-
-            event.respondWith(
-                fetch(returnUrl, {
-                    mode: 'no-cors'
-                })
-            )
-        }
+    // Inspect the accept header for WebP support
+    var supportsWebp = false;
+    if (event.request.headers.has('accept')) {
+      supportsWebp = event.request.headers
+        .get('accept')
+        .includes('webp');
     }
 
+    // If we support WebP
+    if (supportsWebp) {
+      // Clone the request
+      var req = event.request.clone();
 
+      // Build the return URL
+      var returnUrl = req.url.substr(0, req.url.lastIndexOf(".")) + ".webp";
+
+      event.respondWith(
+        fetch(returnUrl, {
+          mode: 'no-cors'
+        })
+      );
+    }
+  }
 });
